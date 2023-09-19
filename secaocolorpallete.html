@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* {box-sizing: border-box; background-color: #FAF0E6;}
+
+.img-zoom-container {
+  position: relative;
+  display: table-cell;
+  float: left;
+}
+
+.img-zoom-lens {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  /*set the size of the lens:*/
+  width: 40px;
+  height: 40px;
+}
+
+.img-zoom-result {
+  border: 1px solid #d4d4d4;
+  /*set the size of the result div:*/
+  width: 300px;
+  height: 300px;
+  margin-top: 280px;
+}
+
+.conteudo {
+  display: table;
+}
+
+.texto-da-img {
+  display: table-cell;
+  float: left;
+  width: 500px;
+  margin-left: 20px;
+  margin-top: -20px;
+}
+
+.button {
+    display: inline-block;
+    border: 2px solid #ffcbdb;
+    padding: 1px 16px;
+    border-radius: 10px;
+    color: #454545;
+    text-decoration: none;
+    margin-top: -10px;
+    margin-left: 20px;
+}
+
+.titulo-do-texto {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.info-do-texto {
+  display: table-cell;
+  font-size: 16px;
+  margin-top: 50px;
+  margin-left: -500px;
+  width: 500px;
+  float: left
+}
+
+.bar1 {
+  background-color: #ffcbdb;
+  width: 290px;
+  height: 2px;
+  margin-top: -20px;
+  margin-left: 800px;
+  justify-content: center;
+  display: flex;
+}
+
+.bar2 {
+  background-color: #ffcbdb;
+  width: 250px;
+  height: 2px;
+  margin-top: -20px;
+}
+
+.title-site {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.active a,
+a:hover {
+  background-color:#ffcbdb;
+}
+
+.preço {
+  margin-top: 180px;
+  margin-left: 348px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+</style>
+<script>
+function imageZoom(imgID, resultID) {
+  var img, lens, result, cx, cy;
+  img = document.getElementById(imgID);
+  result = document.getElementById(resultID);
+  /*create lens:*/
+  lens = document.createElement("DIV");
+  lens.setAttribute("class", "img-zoom-lens");
+  /*insert lens:*/
+  img.parentElement.insertBefore(lens, img);
+  /*calculate the ratio between result DIV and lens:*/
+  cx = result.offsetWidth / lens.offsetWidth;
+  cy = result.offsetHeight / lens.offsetHeight;
+  /*set background properties for the result DIV:*/
+  result.style.backgroundImage = "url('" + img.src + "')";
+  result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+  /*execute a function when someone moves the cursor over the image, or the lens:*/
+  lens.addEventListener("mousemove", moveLens);
+  img.addEventListener("mousemove", moveLens);
+  /*and also for touch screens:*/
+  lens.addEventListener("touchmove", moveLens);
+  img.addEventListener("touchmove", moveLens);
+  function moveLens(e) {
+    var pos, x, y;
+    /*prevent any other actions that may occur when moving over the image:*/
+    e.preventDefault();
+    /*get the cursor's x and y positions:*/
+    pos = getCursorPos(e);
+    /*calculate the position of the lens:*/
+    x = pos.x - (lens.offsetWidth / 2);
+    y = pos.y - (lens.offsetHeight / 2);
+    /*prevent the lens from being positioned outside the image:*/
+    if (x > img.width - lens.offsetWidth) {x = img.width - lens.offsetWidth;}
+    if (x < 0) {x = 0;}
+    if (y > img.height - lens.offsetHeight) {y = img.height - lens.offsetHeight;}
+    if (y < 0) {y = 0;}
+    /*set the position of the lens:*/
+    lens.style.left = x + "px";
+    lens.style.top = y + "px";
+    /*display what the lens "sees":*/
+    result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+  }
+  function getCursorPos(e) {
+    var a, x = 0, y = 0;
+    e = e || window.event;
+    /*get the x and y positions of the image:*/
+    a = img.getBoundingClientRect();
+    /*calculate the cursor's x and y coordinates, relative to the image:*/
+    x = e.pageX - a.left;
+    y = e.pageY - a.top;
+    /*consider any page scrolling:*/
+    x = x - window.pageXOffset;
+    y = y - window.pageYOffset;
+    return {x : x, y : y};
+  }
+}
+</script>
+</head>
+<body>
+
+<h1 class="title-site">JK Beauty</h1>
+<div class="bar1"></div>
+
+<p style="font-size: 20px;">Confira Aqui</p>
+
+<div class="conteudo">
+<div class="img-zoom-container">
+  <img id="myimage" src="Paleta de Sombras Ginger Glow - Color Palette.png" width="300" height="260" align="left">
+  <div class="texto-da-img">
+    <p class="titulo-do-texto">Paleta de Sombras Ginger Glow</p>
+     <div class="bar2"></div>
+  </div>
+    <div>
+    <p class="info-do-texto">Ginger Glow Color Palette Mari Maria Makeup contém 03 tonalidades opacas e 2 cintilantes com alto poder de fixação. Se inspire para criar looks suaves a coloridos e ousados.
+
+      Precauções: Descontinue o uso em caso de sensibilização. Conserve o produto bem fechado, longe da luz e do calor excessivo, Produto indicado somente para uso externo. Mantenha fora do alcance de crianças. Este produto foi formulado de maneira a minimizar possivel surgimento de alergia.</p></div>
+      <div>
+        <p class="preço">R$86,90</p>
+      </div>
+      <a class="button" href="https://www.marimariamakeup.com/color-palette-ginger-glow/p">Compre Aqui</a>
+  </div>
+  <div id="myresult" class="img-zoom-result"></div>
+</div>
+
+ <footer> 
+	<p style="height:250px; background-color:black; color: #fff; font-size:20px; padding:20px; text-align: center; margin-top: 50px">Informações de contato</br><a href="https://www.marimariamakeup.com/" style="text-decoration: none; color:#fff; background-color: black;">Intagram: @juliabeauty</a></br>Site: www.juliabeauty.com.br</a></p> 
+ </footer>
+
+<script>
+// Initiate zoom effect:
+imageZoom("myimage", "myresult");
+</script>
+
+</body>
+</html>
